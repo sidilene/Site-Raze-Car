@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AquaFlow - Gestão de Lava-Jato</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="/Scripts/homee.js"></script>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+     
+    <script src="https://unpkg.com/lucide-react@latest/dist/lucide-react.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        /* Estilo customizado para usar a fonte Inter com Tailwind */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* bg-gray-100 */
+        }
+        /* Animação de entrada para os cards */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .card-animate {
+            animation: fadeIn 0.3s ease-out forwards;
+        }
+        /* Estilo para o modal */
+        .modal-backdrop {
+            transition: opacity 0.3s ease;
+        }
+        .modal-content {
+            transition: transform 0.3s ease;
+        }
+    </style>
+    
+</head>
+<body class="text-gray-800">
+
+    <!-- Modal de Confirmação -->
+    <div id="confirmationModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4 hidden modal-backdrop">
+        <div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-sm modal-content transform scale-95">
+            <h3 id="modalTitle" class="text-lg font-bold text-gray-900">Confirmar Ação</h3>
+            <p id="modalMessage" class="mt-2 text-sm text-gray-600">Você tem certeza que deseja realizar esta ação?</p>
+            <div class="mt-6 flex justify-end space-x-3">
+                <button id="modalCancel" class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 transition">Cancelar</button>
+                <button id="modalConfirm" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">Confirmar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cabeçalho -->
+    <header class="bg-white shadow-md sticky top-0 z-10">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <div class="bg-blue-600 p-2 rounded-lg">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-car-wash"><path d="M12 22a7 7 0 0 0 7-7h-2a5 5 0 0 1-5 5v2z"/><path d="M19 15h2a7 7 0 0 0-7-7V6a5 5 0 0 1 5 5z"/><path d="M5 15H3a7 7 0 0 1 7-7v2a5 5 0 0 0-5 5z"/><path d="M12 8V6a7 7 0 0 1 7 7h-2a5 5 0 0 0-5-5z"/><path d="M2 15h20"/><path d="M21 12v3"/><path d="M3 12v3"/><path d="m5 15-1 6"/><path d="m19 15 1 6"/><path d="M8.2 15.2 6.3 12"/><path d="m15.8 15.2 1.9-3.2"/></svg>
+                </div>
+                <h1 class="text-2xl font-bold text-gray-800">AquaFlow</h1>
+            </div>
+             <div id="auth-status" class="text-sm text-gray-500">
+                Carregando...
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-6 lg:p-8">
+        
+        <!-- Formulário de Adição -->
+        <div class="bg-white p-6 rounded-xl shadow-lg mb-8">
+            <h2 class="text-xl font-bold mb-4 flex items-center"><i data-lucide="plus-circle" class="mr-2 h-6 w-6 text-blue-600"></i>Adicionar Nova Lavagem</h2>
+            <form id="addWashForm" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <input type="text" id="placa" placeholder="Placa do Veículo" required class="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                 <select id="tipo" required class="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition col-span-1 md:col-span-2 lg:col-span-2">
+                    <option value="" disabled selected>Selecione o tipo de veículo</option>
+                    <option value="Carro">Carro</option>
+                    <option value="Moto">Moto</option>
+                    <option value="Ônibus">Ônibus</option>
+                    <option value="Caminhão">Caminhão</option>
+                    <option value="Outro">Outro</option>
+                </select>
+                <input type="text" id="clienteNome" placeholder="Nome do Cliente" class="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                <input type="tel" id="clienteTelefone" placeholder="Telefone (Opcional)" class="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+
+                <select id="servico" required class="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition col-span-1 md:col-span-2 lg:col-span-2">
+                    <option value="" disabled selected>Selecione o Serviço</option>
+                </select>
+
+                    <button type="submit" class="w-full bg-blue-600 text-white font-bold p-3 rounded-lg hover:bg-blue-700 transition flex items-center justify-center space-x-2">
+                    <i data-lucide="plus"></i>
+                    <span>Adicionar</span>
+                </button>
+            </form>
+        </div>
+
+        <!-- Colunas de Status -->
+        <div id="loader" class="text-center py-10">
+            <p class="text-gray-600">Carregando lavagens...</p>
+        </div>
+        <div id="columnsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 hidden">
+            <!-- Coluna Aguardando -->
+            <div class="bg-gray-200/60 rounded-xl p-4">
+                <h3 class="font-bold text-lg mb-4 text-gray-700 flex justify-between items-center">
+                    <span><i data-lucide="clock" class="inline-block mr-2 h-5 w-5"></i>Aguardando</span>
+                    <span id="aguardandoCount" class="bg-gray-400 text-white text-sm font-semibold px-2 py-1 rounded-full">0</span>
+                </h3>
+                <div id="aguardandoContainer" class="space-y-4 min-h-[200px]"></div>
+            </div>
+            <!-- Coluna Em Lavagem -->
+            <div class="bg-yellow-100 rounded-xl p-4">
+                <h3 class="font-bold text-lg mb-4 text-yellow-800 flex justify-between items-center">
+                    <span><i data-lucide="spray-can" class="inline-block mr-2 h-5 w-5"></i>Em Lavagem</span>
+                    <span id="emLavagemCount" class="bg-yellow-500 text-white text-sm font-semibold px-2 py-1 rounded-full">0</span>
+                </h3>
+                <div id="emLavagemContainer" class="space-y-4 min-h-[200px]"></div>
+            </div>
+            <!-- Coluna Finalizado -->
+            <div class="bg-green-100 rounded-xl p-4">
+                <h3 class="font-bold text-lg mb-4 text-green-800 flex justify-between items-center">
+                    <span><i data-lucide="check-circle-2" class="inline-block mr-2 h-5 w-5"></i>Finalizado</span>
+                    <span id="finalizadoCount" class="bg-green-500 text-white text-sm font-semibold px-2 py-1 rounded-full">0</span>
+                </h3>
+                <div id="finalizadoContainer" class="space-y-4 min-h-[200px]"></div>
+            </div>
+        </div>
+
+        <!-- Histórico de Lavagens -->
+        <div class="mt-12 bg-white p-6 rounded-xl shadow-lg">
+             <h2 class="text-xl font-bold mb-4 flex items-center"><i data-lucide="history" class="mr-2 h-6 w-6 text-blue-600"></i>Histórico de Lavagens Pagas (Hoje)</h2>
+             <div id="historicoContainer" class="space-y-3">
+                <p class="text-gray-500">Nenhuma lavagem paga hoje.</p>
+             </div>
+             <div id="totalDiario" class="mt-6 text-right font-bold text-xl text-gray-800">
+                Total do Dia: R$ 0,00
+             </div>
+        </div>
+    </main>
+  
+</body>
+</html>

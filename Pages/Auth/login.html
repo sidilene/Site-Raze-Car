@@ -1,0 +1,201 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Sistema Lava-Jato</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Estilos Globais e Animações */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        }
+
+        /* Container Principal do Formulário */
+        .login-container {
+            position: relative;
+            background: #ffffff;
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 380px;
+            overflow: hidden; /* Essencial para a animação das bolhas */
+            z-index: 1;
+        }
+        
+        /* Título */
+        .login-container h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #1e3c72;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .login-container h2 .fa-car {
+            color: #00aaff;
+            font-size: 1.5em;
+        }
+        
+        /* Grupos de Input (Label + Ícone + Campo) */
+        .input-group {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .input-group .icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #007acc;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 15px 15px 15px 50px; /* Espaço para o ícone */
+            border: 2px solid #ddeeff;
+            border-radius: 10px;
+            font-size: 16px;
+            background-color: #f7fbff;
+            color: #1e3c72;
+            transition: all 0.3s ease;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #00aaff;
+            background-color: #fff;
+            box-shadow: 0 0 0 3px rgba(0, 170, 255, 0.2);
+        }
+        
+        /* Botão de Login */
+        button {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(90deg, #00aaff, #005f99);
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 122, 204, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 122, 204, 0.6);
+        }
+
+        /* Links Adicionais */
+        .extra-links {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .extra-links a {
+            color: #007acc;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .extra-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* --- Animação de Bolhas de Sabão --- */
+        .bubbles {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Fica atrás do conteúdo do formulário */
+            pointer-events: none; /* Não interfere com cliques */
+        }
+
+        .bubble {
+            position: absolute;
+            bottom: -100px; /* Começa fora da tela */
+            border-radius: 50%;
+            background: rgba(0, 170, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            opacity: 0;
+            animation: rise 10s infinite ease-in;
+        }
+
+        @keyframes rise {
+            0% {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+            50% {
+                /* Movimento lateral para simular o vento */
+                transform: translate(10px) scale(1.2); 
+            }
+            100% {
+                transform: translateY(-100vh) scale(0.5); /* Sobe até desaparecer */
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-container">
+        <div class="bubbles"></div>
+
+        <form id="loginForm">
+            <h2>
+                <i class="fas fa-car"></i>
+                LavaFácil Login
+            </h2>
+
+            <div class="input-group">
+                <i class="fas fa-user icon"></i>
+                <input type="email" id="email" placeholder="Seu e-mail" required>
+            </div>
+
+            <div class="input-group">
+                <i class="fas fa-lock icon"></i>
+                <input type="password" id="password" placeholder="Sua senha" required>
+            </div>
+
+            <button type="submit">Entrar</button>
+
+
+            <div class="extra-links">
+                <a href="#">Esqueceu a senha?</a>
+            </div>
+
+            <div class="extra-links" style="margin-top: 10px;">
+                <a href="registro.html">Não tem uma conta? Registre-se</a>
+            </div>
+
+        
+        </form>
+    </div>
+
+    <script src="/Scripts/login.js"></script>
+</body>
+</html>

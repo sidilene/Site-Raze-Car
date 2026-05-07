@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RazeCar | Sistema #1 em Gestão Automotiva</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Variáveis de Cores Atualizadas */
+        :root {
+            --bg-blue: #1800ad; /* O azul solicitado */
+            --bg-blue-dark: #100075; /* Tom mais escuro para hover/detalhes */
+            --bg-light: #ffffff; /* Fundo para seções de conteúdo */
+            --bg-gray: #f4f5f7; 
+            /* Fundo secundário */
+            --brand-orange: #FF7A00; 
+            --brand-orange-hover: #e06a00;
+            --text-light: #F8F9FA;
+            --text-dark: #1A1D27;
+            --text-muted-light: #ffffff; /* Texto de apoio no fundo azul */
+            --text-muted-dark: #6b7280; /* Texto de apoio no fundo claro */
+            --success-green: #00e676;
+            --grid-dots: rgba(255, 255, 255, 0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        /* --- SEÇÃO TOPO (FUNDO AZUL) --- */
+        /* Estilo para a seção pai */
+        .top-section {
+            background-color: var(--bg-blue);
+            color: var(--text-light);
+            padding-bottom: 40px;
+            position: relative; /* Necessário para posicionar os hexágonos */
+            overflow: hidden; /* Garante que os hexágonos não saiam da seção */
+        }
+
+        /* Estilo base para os hexágonos 3D */
+        .hexagon-3d {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.05); /* Cor base semi-transparente */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Sombra para efeito 3D */
+            transition: transform 0.3s ease;
+            z-index: 0; /* Fica atrás do conteúdo */
+        }
+
+        /* Pseudoclasse para criar o formato do hexágono */
+        .hexagon-3d:before,
+        .hexagon-3d:after {
+            content: "";
+            position: absolute;
+            width: 0;
+            border-left: 50% solid transparent;
+            border-right: 50% solid transparent;
+        }
+
+        .hexagon-3d:before {
+            bottom: 100%;
+            border-bottom: 28.87% solid rgba(255, 255, 255, 0.05);
+        }
+
+        .hexagon-3d:after {
+            top: 100%;
+            width: 0;
+            border-top: 28.87% solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Exemplos de posicionamento e tamanhos variados */
+        .hex-1 { top: 10%; left: 5%; width: 100px; height: 57.74px; transform: rotate(15deg); }
+        .hex-2 { top: 30%; right: 10%; width: 150px; height: 86.60px; background-color: rgba(255, 255, 255, 0.08); transform: rotate(-10deg); }
+        .hex-3 { bottom: 15%; left: 20%; width: 80px; height: 46.19px; transform: rotate(5deg); opacity: 0.5; }
+        .hex-4 { top: 60%; left: 50%; width: 200px; height: 115.47px; background-color: rgba(255, 255, 255, 0.03); filter: blur(2px); } /* Efeito desfocado para distância */
+
+        /* --- NAVBAR --- */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 24px 40px;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: var(--text-light);
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--brand-orange);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--brand-orange);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .btn-login {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .btn-nav-cta {
+            background-color: var(--brand-orange);
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: background 0.3s ease;
+        }
+
+        .btn-nav-cta:hover {
+            background-color: var(--brand-orange-hover);
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 60px 40px 80px;
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .hero-content {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .badge {
+            background-color: rgba(255, 122, 0, 0.15);
+            color: var(--brand-orange);
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 24px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid rgba(255, 122, 0, 0.3);
+        }
+
+        .hero-content h1 {
+            font-size: 3.8rem;
+            line-height: 1.1;
+            font-weight: 800;
+            margin-bottom: 24px;
+            letter-spacing: -1px;
+            color: #ffffff;
+        }
+
+        .hero-content p {
+            font-size: 1.15rem;
+            color: var(--text-muted-light);
+            line-height: 1.6;
+            margin-bottom: 40px;
+            max-width: 90%;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 40px;
+            width: 100%;
+        }
+
+        .btn-primary {
+            background-color: var(--brand-orange);
+            color: #fff;
+            border: none;
+            padding: 18px 32px;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--brand-orange-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255, 122, 0, 0.4);
+        }
+
+        .btn-secondary {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--text-light);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 18px 32px;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            backdrop-filter: blur(5px);
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .trust-marks {
+            display: flex;
+            gap: 24px;
+            color: var(--text-light);
+            font-size: 0.9rem;
+            font-weight: 500;
+            opacity: 0.9;
+        }
+
+        .trust-marks div {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .trust-marks i {
+            color: var(--success-green);
+        }
+
+        /* Lado Direito (Imagem) */
+        .hero-image-wrapper {
+            position: relative;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .main-image {
+            width: 100%;
+            max-width: 550px;
+            border-radius: 20px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-image-wrapper::before {
+            content: '';
+            position: absolute;
+            width: 80%;
+            height: 80%;
+            background: var(--brand-orange);
+            filter: blur(120px);
+            opacity: 0.2;
+            z-index: 0;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        /* Cards Flutuantes */
+        .floating-card {
+            position: absolute;
+            background: #ffffff;
+            padding: 16px 24px;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            z-index: 2;
+            animation: float 6s ease-in-out infinite;
+            color: var(--text-dark);
+        }
+
+        .floating-card.left { left: -40px; top: 25%; animation-delay: 0s; }
+        .floating-card.right { right: -20px; bottom: 15%; animation-delay: 2s; }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+        }
+
+        .icon-green { background-color: rgba(0, 200, 83, 0.15); color: #00C853; }
+        .icon-blue { background-color: rgba(24, 0, 173, 0.15); color: var(--bg-blue); }
+
+        .card-text { display: flex; flex-direction: column; }
+        .card-text span:first-child { color: var(--text-muted-dark); font-size: 0.85rem; font-weight: 500; }
+        .card-text span:last-child { font-size: 1.1rem; font-weight: 800; }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* --- SEÇÃO DE FUNCIONALIDADES --- */
+        .features {
+            padding: 100px 20px;
+            background-color: var(--bg-light);
+            text-align: center;
+        }
+
+        .section-header {
+            max-width: 600px;
+            margin: 0 auto 60px;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            color: var(--bg-blue);
+            margin-bottom: 16px;
+        }
+
+        .section-header p {
+            color: var(--text-muted-dark);
+            font-size: 1.1rem;
+        }
+
+        .screens-section{
+            background: var(--bg-blue);
+            padding: 120px 5%;
+        }
+
+        .screens-header{
+            text-align:center;
+            margin-bottom:60px;
+        }
+
+        .screens-header h2{
+            font-size:40px;
+            color:var(--text-light);
+            margin-bottom:10px;
+        }
+
+        .brand-text{
+            color:var(--brand-orange);
+        }
+
+        .screens-header p{
+            color:var(--text-muted-light);
+            max-width:600px;
+            margin:auto;
+        }
+
+        .screens-wrapper{
+            position:relative;
+            max-width:1000px;
+            margin:auto;
+        }
+
+        .screens-carousel{
+            overflow:hidden;
+            border-radius:16px;
+        }
+
+        .screens-track{
+            display:flex;
+            transition:transform .6s ease;
+        }
+
+        .screen-slide{
+            min-width:100%;
+            padding:0 20px;
+        }
+
+        .screen-card{
+            position:relative;
+            border-radius:16px;
+            overflow:hidden;
+            border:1px solid rgba(255,255,255,0.08);
+        }
+
+        .screen-card img{
+            width:100%;
+            display:block;
+        }
+
+        .screen-overlay{
+            position:absolute;
+            bottom:20px;
+            left:20px;
+        }
+
+        .screen-overlay span{
+            color:var(--text-light);
+            font-weight:600;
+            font-size:20px;
+        }
+
+        .screen-overlay p{
+            color:var(--text-muted-light);
+            font-size:14px;
+        }
+
+        .carousel-btn{
+            position:absolute;
+            top:50%;
+            transform:translateY(-50%);
+            background:var(--bg-blue-dark);
+            color:var(--text-light);
+            border:none;
+            padding:12px;
+            border-radius:50%;
+            cursor:pointer;
+        }
+
+        .carousel-btn:hover{
+            background:var(--brand-orange);
+        }
+
+        .prev{
+            left:-50px;
+        }
+
+        .next{
+            right:-50px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); /* força 4 colunas */
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: #fff;
+            padding: 40px 30px;
+            border-radius: 16px;
+            border: 1px solid #eaeaea;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+            text-align: left;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+            border-bottom: 4px solid var(--brand-orange);
+        }
+
+        .feature-card i {
+            font-size: 2.5rem;
+            color: var(--brand-orange);
+            margin-bottom: 24px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 16px;
+            color: var(--text-dark);
+        }
+
+        .feature-card p {
+            color: var(--text-muted-dark);
+            line-height: 1.6;
+        }
+
+        /* --- SEÇÃO DE PLANOS --- */
+        .pricing {
+            padding: 100px 20px;
+            background-color: var(--bg-gray);
+            text-align: center;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .pricing-card {
+            background: #fff;
+            padding: 50px 30px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            text-align: left;
+            position: relative;
+        }
+
+        .pricing-card.popular {
+            border: 2px solid var(--bg-blue);
+            transform: scale(1.05);
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--bg-blue);
+            color: #fff;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .pricing-card h3 { font-size: 1.5rem; margin-bottom: 10px; }
+        .pricing-card .price { font-size: 3rem; font-weight: 800; color: var(--bg-blue); margin-bottom: 20px; }
+        .pricing-card .price span { font-size: 1rem; color: var(--text-muted-dark); font-weight: normal; }
+        
+        .pricing-list { list-style: none; margin-bottom: 30px; }
+        .pricing-list li { margin-bottom: 12px; color: var(--text-muted-dark); display: flex; align-items: center; gap: 10px; }
+        .pricing-list li i { color: var(--success-green); }
+
+        .btn-block {
+            display: block;
+            width: 100%;
+            text-align: center;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .btn-outline { border: 2px solid var(--bg-blue); color: var(--bg-blue); }
+        .btn-outline:hover { background: var(--bg-blue); color: #fff; }
+
+        .btn-solid { background: var(--bg-blue); color: #fff; }
+        .btn-solid:hover { background: var(--bg-blue-dark); }
+
+        /* --- FOOTER --- */
+        footer {
+            background-color: var(--bg-blue-dark);
+            color: #fff;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        footer p { opacity: 0.7; font-size: 0.9rem; }
+
+        /* Estilização do Botão de WhatsApp */
+        .whatsapp-float {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            bottom: 40px;
+            right: 40px;
+            background-color: #25d366;
+            color: #FFF;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .whatsapp-float:hover {
+            background-color: #128c7e;
+            transform: scale(1.1);
+            color: #fff;
+        }
+
+        /* Tooltip (Legenda que aparece ao passar o mouse) */
+        .tooltip-whatsapp {
+            position: absolute;
+            right: 75px;
+            background-color: #333;
+            color: #fff;
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s;
+            white-space: nowrap;
+        }
+
+        .whatsapp-float:hover .tooltip-whatsapp {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Ajuste para celulares */
+        @media (max-width: 768px) {
+            .whatsapp-float {
+                width: 50px;
+                height: 50px;
+                bottom: 20px;
+                right: 20px;
+                font-size: 25px;
+            }
+            .tooltip-whatsapp {
+                display: none; /* Esconde a legenda em telas pequenas */
+            }
+        }
+
+        /* --- RESPONSIVIDADE --- */
+        /* Tablets e Telas Médias */
+        @media (max-width: 1024px) {
+            .hero { 
+                grid-template-columns: 1fr; 
+                text-align: center; 
+                padding: 40px 20px;
+            }
+            .hero-content { align-items: center; }
+            .hero-content p { max-width: 100%; }
+            .hero-buttons { justify-content: center; flex-wrap: wrap; }
+            .trust-marks { justify-content: center; flex-wrap: wrap; }
+            
+            /* Ajuste dos cards flutuantes para não vazarem */
+            .floating-card.left { left: 10px; top: 10%; }
+            .floating-card.right { right: 10px; bottom: 5%; }
+            
+            .nav-links { display: none; }
+            .pricing-card.popular { transform: scale(1); }
+
+            /* Funcionalidades em 2 colunas no tablet */
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Celulares */
+        @media (max-width: 768px) {
+            nav { padding: 20px; }
+            
+            /* Funcionalidades e Preços em 1 coluna no celular */
+            .features-grid, .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .screens-section {
+                padding: 60px 20px;
+            }
+
+            .screens-header h2 {
+                font-size: 32px;
+            }
+
+            /* Traz os botões do carrossel para dentro da tela */
+            .prev { left: 10px; z-index: 10; }
+            .next { right: 10px; z-index: 10; }
+            .carousel-btn { padding: 8px; }
+
+            .pricing-card {
+                padding: 40px 20px;
+            }
+        }
+
+        /* Telas muito pequenas (Smartphones menores) */
+        @media (max-width: 480px) {
+            .hero-content h1 { 
+                font-size: 2.2rem; 
+            }
+            .hero-buttons { 
+                flex-direction: column; 
+                gap: 15px;
+            }
+            .btn-primary, .btn-secondary { 
+                width: 100%; 
+                justify-content: center; 
+                padding: 16px 20px;
+            }
+            .floating-card { 
+                display: none; /* Esconde na tela pequena para não poluir */
+            }
+            .nav-actions {
+                gap: 15px;
+            }
+            .btn-login {
+                display: none; /* Esconde o login para focar no botão principal */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-section">
+
+        <div class="hexagon-3d hex-1"></div>
+        <div class="hexagon-3d hex-2"></div>
+        <div class="hexagon-3d hex-3"></div>
+        <div class="hexagon-3d hex-4"></div>
+        <nav>
+            <a href="#" class="logo">Raze<span>Car</span></a>
+            <ul class="nav-links">
+                <li><a href="#funcionalidades">Funcionalidades</a></li>
+                <li><a href="#planos">Planos</a></li>
+                <li><a href="#telas">Telas</a></li>
+            </ul>
+            <div class="nav-actions">
+                <a href="http://localhost:3000/" class="btn-login">Seu login <i class="fas fa-user" style="font-size: 12px; margin-left: 4px;"></i></a>
+                <a href="#planos" class="btn-nav-cta">Testar Grátis</a>
+            </div>
+        </nav>
+
+        <header class="hero">
+                    <div class="hero-content">
+            <div class="badge">
+                🚗 Plataforma líder em gestão para negócios automotivos
+            </div>
+
+            <h1>Leve a gestão do seu negócio para o próximo nível</h1>
+
+            <p class="text-lg text-slate-400 mb-10 leading-relaxed max-w-xl mx-auto lg:mx-0 reveal" style="transition-delay: 200ms;">
+                        Chega de Papel! O sistema definitivo para Lava Rápidos e Estética Automotiva.
+                        <span class="text-white font-medium">Acesse direto pelo navegador, sem precisar baixar aplicativo.</span>
+                        Agendamento, Estoque e Histórico em uma interface que sua equipe vai amar usar.
+            </p>
+
+            <div class="hero-buttons">
+                <a href="#planos" class="btn-primary">
+                    Experimente gratuitamente por 7 dias <i class="fas fa-arrow-right"></i>
+                </a>
+
+                <a href="#" class="btn-secondary">
+                    <i class="fab fa-whatsapp" style="font-size: 1.2rem;"></i> Falar com um especialista
+                </a>
+            </div>
+
+            <div class="trust-marks">
+                <div><i class="fas fa-check-circle"></i> Sem custo de instalação</div>
+                <div><i class="fas fa-check-circle"></i> Cancelamento simples a qualquer momento</div>
+                <div><i class="fas fa-check-circle"></i> Atendimento rápido e humanizado</div>
+            </div>
+        </div>
+
+            <div class="hero-image-wrapper">
+                <img src="RazeCar.png" alt="Dashboard RazeCar" class="main-image">
+
+                <div class="floating-card left">
+                    <div class="card-icon icon-green">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="card-text">
+                        <span>Dashboars Avançados</span>
+                        <span>+87%</span>
+                    </div>
+                </div>
+
+                <div class="floating-card right">
+                    <div class="card-icon icon-blue">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <div class="card-text">
+                        <span>Auto</span>
+                        <span>Agendamentos</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+    </div>
+
+    <section id="funcionalidades" class="features">
+        <div class="section-header">
+            <h2>Por que escolher a RazeCar?</h2>
+            <p>Tudo o que você precisa para profissionalizar sua estética automotiva e parar de perder dinheiro com desorganização.</p>
+        </div>
+
+        <div class="features-grid">
+
+            <div class="feature-card">
+                <i class="fas fa-mobile-alt"></i>
+                <h3>Controle Mobile</h3>
+                <p>Gerencie seu lava rápido de qualquer lugar pelo celular ou tablet.</p>
+            </div>
+
+            <div class="feature-card">
+                <i class="fas fa-globe"></i>
+                <h3>Vitrine Digital</h3>
+                <p>Mostre seu serviço de forma atrativa e profissional.</p>
+            </div>
+
+            <div class="feature-card">
+                <i class="fas fa-chart-line"></i>
+                <h3>Dashboard Real</h3>
+                <p>Gráficos de faturamento mensais e semanais e desempenho da equipe em tempo real.</p>
+            </div>
+
+            <div class="feature-card">
+                <i class="fas fa-users"></i>
+                <h3>Fidelização</h3>
+                <p>Histórico por placa e agendamentos simples para facilitar para o seu cliente e para você.</p>
+            </div>
+
+
+        </div>
+    </section>
+
+    <section id="telas" class="screens-section">
+    
+        <div class="screens-header">
+            <h2>
+                Por dentro do <span class="brand-text">RazeCar</span>
+            </h2>
+            <p>Uma interface limpa, moderna e fácil de usar, projetada para agilizar sua operação diária.</p>
+        </div>
+
+        <div class="screens-wrapper">
+
+            <button id="screenPrevBtn" class="carousel-btn prev">
+                <i data-lucide="chevron-left"></i>
+            </button>
+
+            <div class="screens-carousel">
+                <div id="screenCarouselTrack" class="screens-track">
+
+                    <div class="screen-slide">
+                        <div class="screen-card">
+                            <img src="/Pages/Dashboard.jpeg">
+                            <div class="screen-overlay">
+                                <span>Visão Geral do Negócio</span>
+                                <p>Acompanhe métricas em tempo real.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="screen-slide">
+                        <div class="screen-card">
+                            <img src="/Pages/historico.jpeg">
+                            <div class="screen-overlay">
+                                <span>Entrada de Veículos Rápida</span>
+                                <p>Cadastro de OS simplificado em poucos cliques.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="screen-slide">
+                        <div class="screen-card">
+                            <img src="/Pages/Agendamento.jpeg">
+                            <div class="screen-overlay">
+                                <span>Agendamentos</span>
+                                <p>Facilidade para você e seu cliente.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <button id="screenNextBtn" class="carousel-btn next">
+                <i data-lucide="chevron-right"></i>
+            </button>
+
+        </div>
+
+    </section>
+
+    <section id="planos" class="pricing">
+        <div class="section-header">
+            <h2>Planos que cabem no seu bolso</h2>
+            <p>Comece grátis por 7 dias e escolha o melhor plano para acelerar o seu negócio.</p>
+        </div>
+
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <h3>Start</h3>
+                <div class="price">R$ 89<span>/mês</span></div>
+                <ul class="pricing-list">
+                    <li><i class="fas fa-check"></i> 1 Usuário administrador</li>
+                    <li><i class="fas fa-check"></i> 3 Funcionários</li>
+                    <li><i class="fas fa-check"></i> <strong> Catálogo de Online </strong></li>
+                    <li><i class="fas fa-check"></i> Gestão de Estoque</li>
+                    <li><i class="fas fa-check"></i> Agendamento</li>
+                    <li><i class="fas fa-check"></i> Auto-Agendamento</li>
+                    <li><i class="fas fa-check"></i> Cadastro de Serviços</li>
+                    <li><i class="fas fa-check"></i> Histórico de Clientes</li>
+                    <li><i class="fas fa-check"></i> Até 80 Lavagens</li>
+                    <li><i class="fas fa-check"></i> Relatórios Simples</li>
+                    <li><i class="fas fa-check"></i> Recibo</li>
+                </ul>
+                <a href="http://localhost:3000/cadastro?plano=basico" class="btn-block btn-outline">Começar Teste</a>
+            </div>
+
+            <div class="pricing-card popular">
+                <div class="popular-badge">Mais Escolhido</div>
+                <h3>Profissional</h3>
+                <div class="price">R$ 110<span>/mês</span></div>
+                <ul class="pricing-list">
+                    <li><i class="fas fa-check"></i> <strong>2 Usuários admins</strong></li>
+                    <li><i class="fas fa-check"></i> 10 Funcionários</li>
+                    <li><i class="fas fa-check"></i> <strong> Catálogo de Online </strong></li>
+                    <li><i class="fas fa-check"></i> Lavagens ilimitadas</li>
+                    <li><i class="fas fa-check"></i> Gestão de Estoque</li>
+                    <li><i class="fas fa-check"></i> Agendamento</li>
+                    <li><i class="fas fa-check"></i> Auto-Agendamento</li>
+                    <li><i class="fas fa-check"></i> Cadastro de Serviços</li>
+                    <li><i class="fas fa-check"></i> Histórico de Clientes</li>
+                    <li><i class="fas fa-check"></i> Relatórios</li>
+                    <li><i class="fas fa-check"></i> Recibo</li>
+                </ul>
+                <a href="http://localhost:3000/cadastro?plano=pro" class="btn-block btn-solid">Começar Teste</a>
+            </div>
+
+            <div class="pricing-card">
+                <h3>Premium</h3>
+                <div class="price">R$ 179<span>/mês</span></div>
+                <ul class="pricing-list">
+                    <li><i class="fas fa-check"></i> <strong>3 Usuários administradores</strong></li>
+                    <li><i class="fas fa-check"></i> <strong>Até 15 Funcionários</strong></li>
+                    <li><i class="fas fa-check"></i> <strong> Catálogo de Online </strong></li>
+                    <li><i class="fas fa-check"></i> Lavagens ilimitadas</li>
+                    <li><i class="fas fa-check"></i> Gestão de Estoque</li>
+                    <li><i class="fas fa-check"></i> Agendamento</li>
+                    <li><i class="fas fa-check"></i> Auto-Agendamento</li>
+                    <li><i class="fas fa-check"></i> Cadastro de Serviços</li>
+                    <li><i class="fas fa-check"></i> Histórico Completo</li>
+                    <li><i class="fas fa-check"></i> Relatórios Avançados</li>
+                    <li><i class="fas fa-check"></i> Recibo</li>
+                </ul>
+                <a href="http://localhost:3000/cadastro?plano=enterprise" class="btn-block btn-outline">Começar Teste</a>
+            </div>
+        </div>
+    </section>
+
+    <a href="https://wa.me/5500999999999?text=Olá! Gostaria de saber mais sobre o RazeCar." 
+        class="whatsapp-float" 
+        target="_blank" 
+        rel="noopener noreferrer">
+        <i class="fab fa-whatsapp"></i>
+        <span class="tooltip-whatsapp">Fale Conosco</span>
+    </a>
+
+    <footer>
+        <h2 class="logo" style="margin-bottom: 10px;">Raze<span>Car</span></h2>
+        <p>&copy; 2024 RazeCar. Tecnologia de outro mundo.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const track = document.getElementById('screenCarouselTrack');
+            const prevBtn = document.getElementById('screenPrevBtn');
+            const nextBtn = document.getElementById('screenNextBtn');
+            const slides = Array.from(track.children);
+            
+            let currentIndex = 0;
+
+            // Função para mover o carrossel
+            function updateCarousel() {
+                // Pega a largura exata de um slide
+                const slideWidth = slides[0].getBoundingClientRect().width;
+                // Move a "pista" para a esquerda ou direita
+                track.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
+            }
+
+            // Quando clicar no botão PRÓXIMO
+            nextBtn.addEventListener('click', () => {
+                if (currentIndex < slides.length - 1) {
+                    currentIndex++;
+                } else {
+                    currentIndex = 0; // Volta para o começo se chegar no fim
+                }
+                updateCarousel();
+            });
+
+            // Quando clicar no botão ANTERIOR
+            prevBtn.addEventListener('click', () => {
+                if (currentIndex > 0) {
+                    currentIndex--;
+                } else {
+                    currentIndex = slides.length - 1; // Vai para o último se estiver no primeiro
+                }
+                updateCarousel();
+            });
+
+            // Reajusta o tamanho caso o usuário mude o tamanho da janela
+            window.addEventListener('resize', updateCarousel);
+        });
+    </script>
+
+</body>
+</html>

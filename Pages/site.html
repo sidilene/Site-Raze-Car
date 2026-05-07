@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RazeCar | Gestão Dark Moderna</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#06b6d4', // Cyan 500
+                        secondary: '#3b82f6', // Blue 500
+                        dark: '#020617', // Slate 950
+                        card: '#0f172a', // Slate 900
+                    },
+                    animation: {
+                        'blob': 'blob 7s infinite',
+                    },
+                    keyframes: {
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+
+        body {
+            background-color: #0B0E14;
+            color: #e2e8f0;
+        }
+        /* Estilos para ocultar a barra de rolagem nos carrosséis */
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        
+        .glass-effect {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .text-gradient {
+            background: linear-gradient(to right, #22d3ee, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        /* Efeito de brilho nas imagens das telas */
+        .screen-glow {
+             box-shadow: 0 0 40px -10px rgba(6, 182, 212, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-dark text-slate-300 antialiased overflow-x-hidden">
+
+    <div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+        <div class="absolute top-0 left-1/4 w-96 h-96 bg-primary/20 rounded-full mix-blend-screen filter blur-3xl opacity-30 animate-blob"></div>
+        <div class="absolute top-0 right-1/4 w-96 h-96 bg-secondary/20 rounded-full mix-blend-screen filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
+        <div class="absolute -bottom-32 left-1/3 w-96 h-96 bg-purple-500/20 rounded-full mix-blend-screen filter blur-3xl opacity-30 animate-blob animation-delay-4000"></div>
+    </div>
+
+    <header class="fixed top-0 w-full z-50 transition-all duration-300 glass-effect border-b border-white/5">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <div class="bg-gradient-to-br from-cyan-400 to-blue-600 p-2 rounded-lg shadow-lg shadow-cyan-500/20">
+                    <i data-lucide="Car" class="h-6 w-6 text-white"></i>
+                </div>
+                <h1 class="text-2xl font-bold text-white tracking-tight">Raze<span class="text-cyan-400">Car</span></h1>
+            </div>
+            
+            <nav class="hidden md:flex space-x-8 text-sm font-medium text-slate-300">
+                <a href="#recursos" class="hover:text-cyan-400 transition-colors">Recursos</a>
+                <a href="#telas" class="hover:text-cyan-400 transition-colors">Sistema</a>
+                <a href="#depoimentos" class="hover:text-cyan-400 transition-colors">Depoimentos</a>
+                <a href="#planos" class="hover:text-cyan-400 transition-colors">Planos</a>
+            </nav>
+
+            <a href="http://localhost:3000/" class="px-5 py-2.5 bg-gradient-to-r from-cyan-500 to-blue-600 text-white text-sm font-bold rounded-full hover:shadow-lg hover:shadow-cyan-500/30 transition-all transform hover:scale-105">
+                Entrar
+            </a>
+        </div>
+    </header>
+
+    <section class="relative pt-40 pb-20 lg:pt-48 lg:pb-32 z-10 overflow-hidden">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
+                
+                <div class="lg:w-1/2 text-center lg:text-left z-20">
+
+                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/20 mb-6 reveal" style="transition-delay: 150ms;">
+                        <i data-lucide="smartphone" class="w-4 h-4 text-cyan-400"></i>
+                        <span class="text-cyan-400 text-sm font-semibold">
+                            Não precisa baixar aplicativo
+                        </span>
+                    </div>
+                    
+                    <h1 class="text-5xl lg:text-7xl font-display font-bold leading-[1.1] mb-6 reveal" style="transition-delay: 100ms;">
+                        Gestão  <br>
+                        <span class="text-gradient-animate">Inteligente.</span>
+                    </h1>
+                    
+                    <p class="text-lg text-slate-400 mb-10 leading-relaxed max-w-xl mx-auto lg:mx-0 reveal" style="transition-delay: 200ms;">
+                        Chega de Papel! O sistema definitivo para Lava Rápidos e Estética Automotiva.
+                        <span class="text-white font-medium">Acesse direto pelo navegador, sem precisar baixar aplicativo.</span>
+                        Agendamento, Estoque e Histórico em uma interface que sua equipe vai amar usar.
+                    </p>
+
+                    
+
+                    <div class="flex flex-col sm:flex-row justify-center lg:justify-start gap-4 reveal" style="transition-delay: 300ms;">
+                        <a href="#planos" class="px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-xl font-bold hover:brightness-110 transition shadow-lg shadow-cyan-500/25 flex items-center justify-center gap-2">
+                            Começar Agora <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </a>
+                        <!-- Btn de video demostrativo
+                        <button class="px-8 py-4 glass text-white rounded-xl font-bold hover:bg-white/5 transition border border-white/10 flex items-center justify-center gap-2">
+                            <i data-lucide="play" class="w-4 h-4 fill-current"></i> Demo Vídeo
+                        </button>
+                        -->
+                    </div>
+                    
+                    <!-- Clientes que confiam 
+                    <div class="mt-10 flex items-center justify-center lg:justify-start gap-4 text-sm text-slate-500 reveal" style="transition-delay: 400ms;">
+                        <div class="flex -space-x-2">
+                            <div class="w-8 h-8 rounded-full bg-slate-700 border-2 border-dark"></div>
+                            <div class="w-8 h-8 rounded-full bg-slate-600 border-2 border-dark"></div>
+                            <div class="w-8 h-8 rounded-full bg-slate-500 border-2 border-dark"></div>
+                        </div>
+                        <p>+500 estéticas confiam</p>
+                    </div>
+                    -->
+                </div>
+
+                <div class="lg:w-1/2 w-full relative z-10 perspective-1000">
+                    <div id="hero-tilt" class="hero-visual relative rounded-2xl border border-white/10 bg-card/50 shadow-2xl shadow-cyan-900/20 backdrop-blur-sm">
+                        <div class="h-10 border-b border-white/10 flex items-center px-4 gap-2">
+                            <div class="w-3 h-3 rounded-full bg-red-500/50"></div>
+                            <div class="w-3 h-3 rounded-full bg-yellow-500/50"></div>
+                            <div class="w-3 h-3 rounded-full bg-green-500/50"></div>
+                        </div>
+                        <div class="p-6 aspect-[4/3] relative overflow-hidden group">
+                            
+                            <div class="absolute inset-0 p-6 flex flex-col gap-4">
+                                <div class="flex gap-4">
+                                    <div class="w-2/3 h-32 rounded-lg bg-gradient-to-br from-white/5 to-transparent border border-white/5 p-4">
+                                        <div class="w-8 h-8 rounded bg-cyan-500/20 mb-2"></div>
+                                        <div class="h-4 w-24 bg-white/10 rounded mb-2"></div>
+                                        <div class="h-8 w-16 bg-white/20 rounded"></div>
+                                    </div>
+                                    <div class="w-1/3 h-32 rounded-lg bg-white/5 border border-white/5 p-4">
+                                        <div class="w-full h-full rounded-full border-4 border-blue-500/30 border-t-blue-500 flex items-center justify-center text-xs text-slate-500">78%</div>
+                                    </div>
+                                </div>
+                                <div class="flex-1 rounded-lg bg-white/5 border border-white/5 p-4 flex flex-col gap-3">
+                                    <div class="flex justify-between items-center border-b border-white/5 pb-2">
+                                        <div class="h-3 w-32 bg-white/10 rounded"></div>
+                                        <div class="h-6 w-16 bg-green-500/20 rounded-full"></div>
+                                    </div>
+                                    <div class="flex justify-between items-center border-b border-white/5 pb-2">
+                                        <div class="h-3 w-24 bg-white/10 rounded"></div>
+                                        <div class="h-6 w-16 bg-yellow-500/20 rounded-full"></div>
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <div class="h-3 w-40 bg-white/10 rounded"></div>
+                                        <div class="h-6 w-16 bg-blue-500/20 rounded-full"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="absolute -right-6 -bottom-6 bg-card border border-white/10 p-4 rounded-xl shadow-xl animate-bounce duration-[3000ms]">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center text-green-400">
+                                        <i data-lucide="check" class="w-5 h-5"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs text-slate-400">Lavagem Finalizada</p>
+                                        <p class="font-bold text-white">BMW X6 - R$ 120,00</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="recursos" class="py-20 relative z-10 bg-slate-900/30 border-y border-white/5 ">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-white text-center mb-16">
+                Tudo o que você precisa <span class="text-cyan-400">em um só lugar</span>
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="glass-effect p-8 rounded-2xl hover:border-cyan-500/50 transition duration-300 group">
+                    <div class="w-12 h-12 bg-cyan-500/10 rounded-lg flex items-center justify-center mb-6 group-hover:bg-cyan-500/20 transition">
+                        <i data-lucide="smartphone" class="h-6 w-6 text-cyan-400"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Controle Mobile</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Gerencie seu lava rápido de qualquer lugar pelo celular ou tablet.</p>
+                </div>
+                <div class="glass-effect p-8 rounded-2xl hover:border-cyan-500/50 transition duration-300 group">
+                    <div class="w-12 h-12 bg-blue-500/10 rounded-lg flex items-center justify-center mb-6 group-hover:bg-blue-500/20 transition">
+                        <i data-lucide="trending-up" class="h-6 w-6 text-blue-400"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Dashboard Real</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Gráficos de faturamento mensais e semanais e desempenho da equipe em tempo real.</p>
+                </div>
+                <div class="glass-effect p-8 rounded-2xl hover:border-cyan-500/50 transition duration-300 group">
+                    <div class="w-12 h-12 bg-purple-500/10 rounded-lg flex items-center justify-center mb-6 group-hover:bg-purple-500/20 transition">
+                        <i data-lucide="users" class="h-6 w-6 text-purple-400"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Fidelização</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Histórico por placa e Agendamentos simples para facilitar para o seu cliente e para você.</p>
+                </div>
+                <div class="glass-effect p-8 rounded-2xl hover:border-cyan-500/50 transition duration-300 group">
+                    <div class="w-12 h-12 bg-green-500/10 rounded-lg flex items-center justify-center mb-6 group-hover:bg-green-500/20 transition">
+                        <i data-lucide="wallet" class="h-6 w-6 text-green-400"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Financeiro</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Controle de estoque e cadastro de fornecedores.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="telas" class="py-24 relative z-10 overflow-hidden">
+        <div class="container mx-auto px-4 mb-12 text-center">
+             <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">
+                Por dentro do <span class="text-gradient">RazeCar</span>
+            </h2>
+            <p class="text-slate-400 max-w-xl mx-auto">Uma interface limpa, moderna e fácil de usar, projetada para agilizar sua operação diária.</p>
+        </div>
+
+        <div class="relative max-w-5xl mx-auto px-4 lg:px-0">
+             <button id="screenPrevBtn" class="absolute left-2 lg:-left-12 top-1/2 -translate-y-1/2 z-20 bg-slate-800/80 hover:bg-cyan-600 text-white p-3 rounded-full shadow-lg transition border border-white/10 backdrop-blur-md">
+                <i data-lucide="chevron-left" class="w-6 h-6"></i>
+            </button>
+
+            <div class="overflow-hidden rounded-2xl">
+                <div id="screenCarouselTrack" class="flex transition-transform duration-700 ease-in-out">
+                    
+                    <div class="w-full flex-shrink-0 px-2 md:px-8">
+                        <div class="relative rounded-2xl overflow-hidden border border-white/10 screen-glow group">
+                             <img src="/Pages/Dashboard.jpeg" alt="Tela de Dashboard" class="w-full rounded-2xl transform group-hover:scale-[1.02] transition duration-500">
+                             <div class="absolute inset-0 bg-gradient-to-t from-dark/80 via-transparent to-transparent pointer-events-none"></div>
+                             <div class="absolute bottom-4 left-4 md:bottom-8 md:left-8">
+                                 <span class="text-white font-bold text-lg md:text-xl">Visão Geral do Negócio</span>
+                                 <p class="text-slate-300 text-sm">Acompanhe métricas em tempo real.</p>
+                             </div>
+                        </div>
+                    </div>
+
+                    <div class="w-full flex-shrink-0 px-2 md:px-8">
+                        <div class="relative rounded-2xl overflow-hidden border border-white/10 screen-glow group">
+                             <img src="/Pages/historico.jpeg" alt="Tela de Nova OS" class="w-full rounded-2xl transform group-hover:scale-[1.02] transition duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-dark/80 via-transparent to-transparent pointer-events-none"></div>
+                            <div class="absolute bottom-4 left-4 md:bottom-8 md:left-8">
+                                <span class="text-white font-bold text-lg md:text-xl">Entrada de Veículos Rápida</span>
+                                <p class="text-slate-300 text-sm">Cadastro de OS simplificado em poucos cliques.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                     <div class="w-full flex-shrink-0 px-2 md:px-8">
+                        <div class="relative rounded-2xl overflow-hidden border border-white/10 screen-glow group">
+                             <img src="/Pages/Agendamento.jpeg
+                             " alt="Tela Financeira" class="w-full rounded-2xl transform group-hover:scale-[1.02] transition duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-dark/80 via-transparent to-transparent pointer-events-none"></div>
+                            <div class="absolute bottom-4 left-4 md:bottom-8 md:left-8">
+                                <span class="text-white font-bold text-lg md:text-xl">Agendamentos</span>
+                                <p class="text-slate-300 text-sm">Facilidade para você e seu cliente.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+             <button id="screenNextBtn" class="absolute right-2 lg:-right-12 top-1/2 -translate-y-1/2 z-20 bg-slate-800/80 hover:bg-cyan-600 text-white p-3 rounded-full shadow-lg transition border border-white/10 backdrop-blur-md">
+                <i data-lucide="chevron-right" class="w-6 h-6"></i>
+            </button>
+
+             <div class="flex justify-center space-x-2 mt-6" id="screenIndicators">
+                <button class="w-12 h-1.5 rounded-full bg-cyan-500 transition-all"></button>
+                <button class="w-12 h-1.5 rounded-full bg-slate-700 hover:bg-slate-500 transition-all"></button>
+                <button class="w-12 h-1.5 rounded-full bg-slate-700 hover:bg-slate-500 transition-all"></button>
+            </div>
+        </div>
+    </section>
+
+    <section id="depoimentos" class="py-24 bg-slate-900/50 relative z-10 border-t border-white/5">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-white text-center mb-4">
+                Quem usa, <span class="text-gradient">recomenda</span>
+            </h2>
+            <p class="text-center text-slate-400 mb-12">Veja o impacto do LavaFácil em negócios reais.</p>
+
+            <div class="relative max-w-4xl mx-auto">
+                
+                <button id="testimonialPrevBtn" class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-12 z-20 bg-slate-800 hover:bg-cyan-600 text-white p-3 rounded-full shadow-lg transition border border-white/10">
+                    <i data-lucide="chevron-left" class="w-6 h-6"></i>
+                </button>
+
+                <div class="overflow-hidden rounded-2xl">
+                    <div id="testimonialTrack" class="flex transition-transform duration-500 ease-out">
+                        <div class="w-full flex-shrink-0 px-4">
+                            <div class="glass-effect p-10 rounded-2xl text-center border border-white/5">
+                                <div class="w-16 h-16 bg-gray-700 rounded-full mx-auto mb-4 overflow-hidden border-2 border-cyan-500">
+                                    <img src="/Pages/Cliente.jpeg" alt="Usuario" class="w-full h-full object-cover">
+                                </div>
+                                <div class="flex justify-center mb-4 text-yellow-400"><i data-lucide="star" class="w-5 h-5 fill-current"></i><i data-lucide="star" class="w-5 h-5 fill-current"></i><i data-lucide="star" class="w-5 h-5 fill-current"></i><i data-lucide="star" class="w-5 h-5 fill-current"></i><i data-lucide="star" class="w-5 h-5 fill-current"></i></div>
+                                <p class="text-xl text-slate-200 italic mb-6">"Minha lucratividade aumentou 30% em 2 meses. Eu perdia dinheiro no caixa e nem sabia. O sistema pagou a si mesmo na primeira semana."</p>
+                                <h4 class="text-white font-bold">Carlos Eduardo</h4>
+                                <span class="text-cyan-400 text-sm">Dono do Power Lava-Car SP</span>
+                            </div>
+                        </div>
+                        <div class="w-full flex-shrink-0 px-4">
+                            <div class="glass-effect p-10 rounded-2xl text-center border border-white/5">
+                                <div class="w-16 h-16 bg-gray-700 rounded-full mx-auto mb-4 overflow-hidden border-2 border-cyan-500">
+                                    <img src="/Pages/Cliente2.jpeg" alt="Usuario" class="w-full h-full object-cover">
+                                </div>
+                                <div class="flex justify-center mb-4 text-yellow-400"><i data-lucide="star" class="w-5 h-5 fill-current"></i><i data-lucide="star" class="w-5 h-5 fill-current"></i><i data-lucide="star" class="w-5 h-5 fill-current"></i><i data-lucide="star" class="w-5 h-5 fill-current"></i><i data-lucide="star" class="w-5 h-5 fill-current"></i></div>
+                                <p class="text-xl text-slate-200 italic mb-6">"Meus clientes conseguem agendar um horário com facilidade."</p>
+                                <h4 class="text-white font-bold">Fernanda Lima</h4>
+                                <span class="text-cyan-400 text-sm">Gerente do Lava Jato Agua Viva</span>
+                            </div>
+                        </div>
+                        <div class="w-full flex-shrink-0 px-4">
+                             <div class="glass-effect p-10 rounded-2xl text-center border border-white/5">
+                                <div class="w-16 h-16 bg-gray-700 rounded-full mx-auto mb-4 overflow-hidden border-2 border-cyan-500">
+                                    <img src="/Pages/Cliente6.jpeg" alt="Usuario" class="w-full h-full object-cover">
+                                </div>
+                                <div class="flex justify-center mb-4 text-yellow-400"><i data-lucide="star" class="w-5 h-5 fill-current"></i><i data-lucide="star" class="w-5 h-5 fill-current"></i><i data-lucide="star" class="w-5 h-5 fill-current"></i><i data-lucide="star" class="w-5 h-5 fill-current"></i><i data-lucide="star" class="w-5 h-5"></i></div>
+                                <p class="text-xl text-slate-200 italic mb-6">"Interface muito limpa e moderna (Dark Mode é vida!). O suporte me ajudou a configurar tudo em 10 minutos."</p>
+                                <h4 class="text-white font-bold">Roberto Campos</h4>
+                                <span class="text-cyan-400 text-sm">Proprietário Rede Box</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button id="testimonialNextBtn" class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-12 z-20 bg-slate-800 hover:bg-cyan-600 text-white p-3 rounded-full shadow-lg transition border border-white/10">
+                    <i data-lucide="chevron-right" class="w-6 h-6"></i>
+                </button>
+                
+                <div class="flex justify-center space-x-2 mt-6" id="testimonialIndicators">
+                    <button class="w-3 h-3 rounded-full bg-cyan-500 transition-all"></button>
+                    <button class="w-3 h-3 rounded-full bg-slate-600 hover:bg-slate-400 transition-all"></button>
+                    <button class="w-3 h-3 rounded-full bg-slate-600 hover:bg-slate-400 transition-all"></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   
+
+        <section id="planos" class="py-20 relative z-10">
+            <div class="container mx-auto px-4 text-center">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Investimento que se paga</h2>
+                <p class="text-slate-400 mb-12">Cancele a qualquer momento. Sem fidelidade.</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 max-w-7xl mx-auto items-stretch">
+                    
+                    <div class="bg-card border border-white/5 rounded-2xl p-6 hover:border-white/20 transition flex flex-col">
+                        <h3 class="text-xl font-semibold text-white">Iniciante</h3>
+                        <div class="my-4">
+                            <span class="text-4xl font-bold text-white">R$ 89</span>
+                            <span class="text-slate-500">/mês</span>
+                        </div>
+                        <ul class="text-left text-slate-400 space-y-3 mb-8 text-sm flex-grow">
+                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-cyan-400 mr-2"></i> 1 Usuário administrador</li>
+                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-cyan-400 mr-2"></i> 3 Funcionários</li>
+                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-cyan-400 mr-2"></i> Acompanhamento</li>
+                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-cyan-400 mr-2"></i> Agendamento</li>
+                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-cyan-400 mr-2"></i> Auto-Agendamento</li>
+                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-cyan-400 mr-2"></i> Cadastro de Serviços</li>
+                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-cyan-400 mr-2"></i> Histórico de Clientes</li>
+                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-cyan-400 mr-2"></i> Até 80 Lavagens</li>
+                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-cyan-400 mr-2"></i> Relatórios Simples</li>
+                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-cyan-400 mr-2"></i> Recibo</li>
+                        </ul>
+                        <a href="http://localhost:3000/cadastro?plano=basico" class="block w-full py-3 rounded-lg border border-white/10 text-white hover:bg-white/5 transition font-semibold">
+                            Começar Agora
+                        </a>
+                    </div>
+
+                    <div class="relative bg-slate-800/80 backdrop-blur-xl border border-cyan-500/50 rounded-2xl p-8 shadow-2xl shadow-cyan-900/40 transform xl:scale-105 z-10 flex flex-col">
+                        <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                            <span class="bg-cyan-500 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Recomendado</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white">Profissional</h3>
+                        <div class="my-4">
+                            <span class="text-5xl font-bold text-white">R$110</span>
+                            <span class="text-slate-500">/mês</span>
+                        </div>
+                        <ul class="text-left text-slate-300 space-y-4 mb-8 text-sm flex-grow">
+                            <li class="flex items-center"><i data-lucide="check-circle" class="w-5 h-5 text-cyan-400 mr-2"></i> <strong> 2 Usuários admins</strong></li>
+                            <li class="flex items-center"><i data-lucide="check-circle" class="w-5 h-5 text-cyan-400 mr-2"></i> 10 Funcionários</li>
+                            <li class="flex items-center"><i data-lucide="check-circle" class="w-5 h-5 text-cyan-400 mr-2"></i> Lavagens ilimitadas</li>
+                            <li class="flex items-center"><i data-lucide="check-circle" class="w-4 h-4 text-cyan-400 mr-2"></i> Acompanhamento</li>
+                            <li class="flex items-center"><i data-lucide="check-circle" class="w-4 h-4 text-cyan-400 mr-2"></i> Agendamento</li>
+                            <li class="flex items-center"><i data-lucide="check-circle" class="w-4 h-4 text-cyan-400 mr-2"></i> Auto-Agendamento</li>
+                            <li class="flex items-center"><i data-lucide="check-circle" class="w-4 h-4 text-cyan-400 mr-2"></i> Cadastro de Serviços</li>
+                            <li class="flex items-center"><i data-lucide="check-circle" class="w-4 h-4 text-cyan-400 mr-2"></i> Histórico de Clientes</li>
+                            <li class="flex items-center"><i data-lucide="check-circle" class="w-4 h-4 text-cyan-400 mr-2"></i> Relatórios</li>
+                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-cyan-400 mr-2"></i> Recibo</li>
+                        </ul>
+                        <a href="http://localhost:3000/cadastro?plano=pro" class="block w-full py-4 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold hover:shadow-lg hover:shadow-cyan-500/25 transition">
+                            Teste Grátis 7 Dias
+                        </a>
+                    </div>
+
+                    <div class="bg-card border border-white/5 rounded-2xl p-6 hover:border-white/20 transition flex flex-col">
+                        <h3 class="text-xl font-semibold text-white">Rede</h3>
+                        <div class="my-4">
+                            <span class="text-4xl font-bold text-white">R$179</span>
+                            <span class="text-slate-500">/mês</span>
+                        </div>
+                        <ul class="text-left text-slate-400 space-y-3 mb-8 text-sm flex-grow">
+                            <li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-cyan-400 mr-2"></i> <strong>3 Usuários administradores</strong></li>
+                            <li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-cyan-400 mr-2"></i> <strong>Até 15 Funcionários</strong></li>
+                            <li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-cyan-400 mr-2"></i> Lavagens ilimitadas</li>
+                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-cyan-400 mr-2"></i> Acompanhamento</li>
+                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-cyan-400 mr-2"></i> Agendamento</li>
+                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-cyan-400 mr-2"></i> Auto-Agendamento</li>
+                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-cyan-400 mr-2"></i> Cadastro de Serviços</li>
+                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-cyan-400 mr-2"></i> Histórico Completo</li>
+                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-cyan-400 mr-2"></i> Relatórios Avançados</li>
+                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-cyan-400 mr-2"></i> Recibo</li>
+                        </ul>
+                        <a href="http://localhost:3000/cadastro?plano=enterprise" class="block w-full py-3 rounded-lg border border-white/10 text-white hover:bg-white/5 transition font-semibold">
+                            Começar Agora
+                        </a>
+                    </div>
+
+                    <div class="bg-card border border-white/5 rounded-2xl p-6 hover:border-cyan-500/30 transition flex flex-col">
+                        <h3 class="text-xl font-semibold text-cyan-400">Corporativo</h3>
+                        <div class="my-4">
+                            <span class="text-3xl font-bold text-white">Sob Consulta</span>
+                            <p class="text-slate-500 text-xs mt-1">Para grandes operações</p>
+                        </div>
+                        <ul class="text-left text-slate-400 space-y-3 mb-8 text-sm flex-grow">
+                            <li class="flex items-center"><i data-lucide="infinity" class="w-4 h-4 text-cyan-400 mr-2"></i> <strong>Admins Ilimitados</strong></li>
+                            <li class="flex items-center"><i data-lucide="infinity" class="w-4 h-4 text-cyan-400 mr-2"></i> <strong>Funcionários Ilimitados</strong></li>
+                            <li class="flex items-center"><i data-lucide="building" class="w-4 h-4 text-cyan-400 mr-2"></i> Multi-Unidades / Franquias</li>
+                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-cyan-400 mr-2"></i> Painel Master</li>
+                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-cyan-400 mr-2"></i> API de Integração</li>
+                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-cyan-400 mr-2"></i> Gerente de Conta (SLA)</li>
+                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-cyan-400 mr-2"></i> Treinamento da Equipe</li>
+                        </ul>
+                        <a href="https://wa.me/5591985013763?text=Olá,%20tenho%20interesse%20no%20plano%20Corporativo" target="_blank" class="block w-full py-3 rounded-lg border border-cyan-500/20 bg-cyan-500/10 text-cyan-400 hover:bg-cyan-500/20 transition font-semibold">
+                            Falar com Consultor
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    <footer class="bg-black py-12 border-t border-white/10 relative z-10">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-8">
+                <div class="flex items-center space-x-2 mb-4 md:mb-0">
+                    <i data-lucide="Car" class="h-6 w-6 text-cyan-500"></i>
+                    <span class="text-xl font-bold text-white">RazeCar</span>
+                </div>
+                <div class="flex space-x-6 text-slate-400">
+                    <a href="#" class="hover:text-cyan-400 transition"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+                    <a href="#" class="hover:text-cyan-400 transition"><i data-lucide="facebook" class="w-5 h-5"></i></a>
+                    <a href="#" class="hover:text-cyan-400 transition"><i data-lucide="twitter" class="w-5 h-5"></i></a>
+                </div>
+            </div>
+            <div class="text-center text-slate-600 text-sm">
+                &copy; 2025 Raze Software. Feito para o futuro.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Inicializar ícones
+        lucide.createIcons();
+
+        // --- LÓGICA DOS CARROSSÉIS ---
+        
+        // Função genérica para criar um carrossel
+        function setupCarousel(trackId, prevBtnId, nextBtnId, indicatorsId, autoPlaySpeed = 0) {
+            const track = document.getElementById(trackId);
+            const prevBtn = document.getElementById(prevBtnId);
+            const nextBtn = document.getElementById(nextBtnId);
+            const indicators = document.getElementById(indicatorsId).children;
+            const totalSlides = track.children.length;
+            let currentIndex = 0;
+
+            function updateCarousel() {
+                track.style.transform = `translateX(-${currentIndex * 100}%)`;
+                
+                // Atualiza indicadores
+                Array.from(indicators).forEach((dot, index) => {
+                    // Lógica diferente para os indicadores de traço (screenshots) vs bolinha (depoimentos)
+                    const isActive = index === currentIndex;
+                    if (indicatorsId === 'screenIndicators') {
+                         dot.classList.toggle('bg-cyan-500', isActive);
+                         dot.classList.toggle('bg-slate-700', !isActive);
+                    } else {
+                         dot.classList.toggle('bg-cyan-500', isActive);
+                         dot.classList.toggle('bg-slate-600', !isActive);
+                    }
+                });
+            }
+
+            nextBtn.addEventListener('click', () => {
+                currentIndex = (currentIndex + 1) % totalSlides;
+                updateCarousel();
+            });
+
+            prevBtn.addEventListener('click', () => {
+                currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+                updateCarousel();
+            });
+
+            if (autoPlaySpeed > 0) {
+                 setInterval(() => {
+                    currentIndex = (currentIndex + 1) % totalSlides;
+                    updateCarousel();
+                }, autoPlaySpeed);
+            }
+            
+            // Inicializa
+            updateCarousel();
+        }
+
+        // 1. Configurar Carrossel de Telas (Screenshots) - Sem autoplay, transição mais lenta
+        setupCarousel('screenCarouselTrack', 'screenPrevBtn', 'screenNextBtn', 'screenIndicators');
+
+        // 2. Configurar Carrossel de Depoimentos - Com autoplay de 5s
+        setupCarousel('testimonialTrack', 'testimonialPrevBtn', 'testimonialNextBtn', 'testimonialIndicators', 5000);
+
+        // Inicializa ícones
+        lucide.createIcons();
+
+        // 1. Efeito Spotlight nos Cards
+        const cardsContainer = document.getElementById('cards-container');
+        const cards = document.querySelectorAll('.spotlight-card');
+
+        cardsContainer.addEventListener('mousemove', (e) => {
+            cards.forEach(card => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--mouse-x', `${x}px`);
+                card.style.setProperty('--mouse-y', `${y}px`);
+            });
+        });
+
+        // 2. Efeito Tilt na Hero Image
+        const heroSection = document.querySelector('section');
+        const tiltElement = document.getElementById('hero-tilt');
+
+        heroSection.addEventListener('mousemove', (e) => {
+            const { clientX, clientY } = e;
+            const { innerWidth, innerHeight } = window;
+            
+            // Calcula a rotação baseada na posição do mouse
+            // Limita a rotação a +/- 10 graus
+            const rotateY = ((clientX / innerWidth) - 0.5) * 20; 
+            const rotateX = ((clientY / innerHeight) - 0.5) * -20;
+
+            tiltElement.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        });
+
+        heroSection.addEventListener('mouseleave', () => {
+            tiltElement.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg)`;
+        });
+
+        // 3. Scroll Reveal Animation
+        const revealElements = document.querySelectorAll('.reveal');
+
+        const revealOnScroll = () => {
+            const windowHeight = window.innerHeight;
+            const elementVisible = 100;
+
+            revealElements.forEach((reveal) => {
+                const elementTop = reveal.getBoundingClientRect().top;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveal.classList.add('active');
+                }
+            });
+        };
+
+        window.addEventListener('scroll', revealOnScroll);
+        // Trigger inicial
+        revealOnScroll();
+
+        // 4. Navbar Blur on Scroll
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('glass', 'shadow-lg');
+            } else {
+                navbar.classList.remove('glass', 'shadow-lg');
+            }
+        });
+
+
+        
+
+    </script>
+</body>
+</html>
