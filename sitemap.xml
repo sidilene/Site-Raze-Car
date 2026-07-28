@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-        <loc>https://razecar.com.br/Pages/RazeCarSite.html</loc>
+        <loc>https://razecar.com.br/</loc>
         <lastmod>2026-07-27</lastmod>
         <changefreq>weekly</changefreq>
         <priority>1.0</priority>
     </url>
     <url>
-        <loc>https://razecar.com.br/Pages/blog/index.html</loc>
+        <loc>https://razecar.com.br/blog</loc>
         <lastmod>2026-07-27</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
-        <loc>https://razecar.com.br/Pages/blog/fidelizacao-clientes-estetica-automotiva.html</loc>
+        <loc>https://razecar.com.br/blog/fidelizacao-clientes-estetica-automotiva</loc>
         <lastmod>2026-07-27</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://razecar.com.br/Pages/blog/organizar-agendamento-lava-rapido.html</loc>
+        <loc>https://razecar.com.br/blog/organizar-agendamento-lava-rapido</loc>
         <lastmod>2026-07-27</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://razecar.com.br/Pages/blog/como-precificar-servicos-estetica-automotiva.html</loc>
+        <loc>https://razecar.com.br/blog/como-precificar-servicos-estetica-automotiva</loc>
         <lastmod>2026-07-27</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
