@@ -1098,8 +1098,8 @@
         // Dados dos planos
         const planData = {
             basico: {
-                mensal: "89",
-                anual: "890",
+                mensal: "49",
+                anual: "499",
                 features: `
                     <li><i class="fas fa-check"></i> 1 Usuário administrador</li>
                     <li><i class="fas fa-check"></i> 3 Funcionários</li>
@@ -1115,8 +1115,8 @@
                 `
             },
             pro: {
-                mensal: "110",
-                anual: "1100",
+                mensal: "89",
+                anual: "899",
                 features: `
                     <li><i class="fas fa-check"></i> <strong>2 Usuários admins</strong></li>
                     <li><i class="fas fa-check"></i> 10 Funcionários</li>
@@ -1132,8 +1132,8 @@
                 `
             },
             enterprise: {
-                mensal: "179",
-                anual: "1790",
+                mensal: "110",
+                anual: "1100",
                 features: `
                     <li><i class="fas fa-check"></i> <strong>3 Usuários administradores</strong></li>
                     <li><i class="fas fa-check"></i> <strong>Até 15 Funcionários</strong></li>
@@ -1186,8 +1186,8 @@
                 }
 
                 // Troca os links
-                if(linkMensal) linkMensal.href = `http://localhost:3000/cadastro?plano=${planKey}&ciclo=mensal`;
-                if(linkAnual) linkAnual.href = `http://localhost:3000/cadastro?plano=${planKey}&ciclo=anual`;
+                if(linkMensal) linkMensal.href = `https://sistema.razecar.com.br/cadastro?plano=${planKey}&ciclo=mensal`;
+                if(linkAnual) linkAnual.href = `https://sistema.razecar.com.br/cadastro?plano=${planKey}&ciclo=anual`;
 
                 // Efeito de acender novamente (é aqui que ele volta a ficar visível)
                 if(cardMensalWrap) cardMensalWrap.style.opacity = '1';
