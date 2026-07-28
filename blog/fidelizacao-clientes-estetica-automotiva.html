@@ -118,8 +118,22 @@
         footer nav a { color:#fff; opacity:0.8; margin:0 12px; text-decoration:none; }
 
         @media (max-width:768px) {
+            nav { padding: 20px; }
             .nav-links { display:none; }
+            article { padding: 16px 20px 60px; }
             article h1 { font-size: 1.8rem; }
+            article h2 { font-size: 1.3rem; }
+            article p, article li { font-size: 1rem; }
+            .cta-box { padding: 20px; }
+            article table { display: block; overflow-x: auto; white-space: nowrap; }
+        }
+
+        @media (max-width:480px) {
+            header.top-bar { padding: 18px 20px; }
+            .logo { font-size: 1.4rem; }
+            .btn-nav-cta { padding: 8px 14px; font-size: 0.85rem; }
+            article h1 { font-size: 1.5rem; }
+            .breadcrumb { font-size: 0.8rem; }
         }
     </style>
 </head>

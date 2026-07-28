@@ -558,6 +558,10 @@
             line-height: 1.6;
         }
 
+        .blog-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
         /* --- SEÇÃO DE PLANOS --- */
         .pricing {
             padding: 100px 20px;
@@ -814,7 +818,7 @@
             .pricing-card.popular { transform: scale(1); }
 
             /* Funcionalidades em 2 colunas no tablet */
-            .features-grid {
+            .features-grid, .blog-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
         }
@@ -824,7 +828,7 @@
             nav { padding: 20px; }
             
             /* Funcionalidades e Preços em 1 coluna no celular */
-            .features-grid, .pricing-grid {
+            .features-grid, .pricing-grid, .blog-grid {
                 grid-template-columns: 1fr;
             }
 
@@ -1053,7 +1057,7 @@
             <p>Conteúdo gratuito para te ajudar a vender mais e organizar melhor o seu negócio.</p>
         </div>
 
-        <div class="features-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="features-grid blog-grid">
             <div class="feature-card">
                 <i class="fas fa-heart"></i>
                 <h3><a href="/blog/fidelizacao-clientes-estetica-automotiva" style="color:inherit; text-decoration:none;">Como fidelizar clientes na estética automotiva</a></h3>
