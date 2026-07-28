@@ -3,10 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RazeCar | Sistema #1 em Gestão Automotiva</title>
+    <title>RazeCar | Sistema de Gestão para Lava-Rápido e Estética Automotiva</title>
+    <meta name="description" content="RazeCar é o sistema completo para lava-rápidos e estéticas automotivas: agendamento online, controle de estoque, histórico de clientes por placa e dashboard de faturamento. Teste grátis por 7 dias.">
+    <meta name="keywords" content="sistema para lava rapido, sistema para estetica automotiva, gestão de lava jato, software estética automotiva, agendamento lava rápido, controle de estoque estética automotiva, ERP lava jato">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="RazeCar">
+    <link rel="canonical" href="https://razecar.com.br/Pages/RazeCarSite.html">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:url" content="https://razecar.com.br/Pages/RazeCarSite.html">
+    <meta property="og:site_name" content="RazeCar">
+    <meta property="og:title" content="RazeCar | Sistema de Gestão para Lava-Rápido e Estética Automotiva">
+    <meta property="og:description" content="Chega de papel! Agendamento, estoque e histórico de clientes em um só sistema, direto do navegador. Experimente grátis por 7 dias.">
+    <meta property="og:image" content="https://razecar.com.br/Pages/RazeCar.png">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://razecar.com.br/Pages/RazeCarSite.html">
+    <meta name="twitter:title" content="RazeCar | Sistema de Gestão para Lava-Rápido e Estética Automotiva">
+    <meta name="twitter:description" content="Chega de papel! Agendamento, estoque e histórico de clientes em um só sistema, direto do navegador. Experimente grátis por 7 dias.">
+    <meta name="twitter:image" content="https://razecar.com.br/Pages/RazeCar.png">
+
+    <link rel="icon" type="image/png" href="RazeCar.png">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
+
+    <!-- Dados estruturados: SoftwareApplication -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "RazeCar",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Web",
+        "url": "https://razecar.com.br/Pages/RazeCarSite.html",
+        "description": "Sistema de gestão para lava-rápidos e estéticas automotivas com agendamento, controle de estoque e histórico de clientes.",
+        "offers": {
+            "@type": "Offer",
+            "price": "49",
+            "priceCurrency": "BRL"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "RazeCar",
+            "url": "https://razecar.com.br/"
+        }
+    }
+    </script>
+
     <style>
         /* Variáveis de Cores Atualizadas */
         :root {
@@ -838,6 +885,7 @@
                 <li><a href="#funcionalidades">Funcionalidades</a></li>
                 <li><a href="#planos">Planos</a></li>
                 <li><a href="#telas">Telas</a></li>
+                <li><a href="blog/index.html">Blog</a></li>
             </ul>
             <div class="nav-actions">
                 <a href="http://localhost:3000/" class="btn-login">Seu login <i class="fas fa-user" style="font-size: 12px; margin-left: 4px;"></i></a>
@@ -958,7 +1006,7 @@
 
                     <div class="screen-slide">
                         <div class="screen-card">
-                            <img src="/Pages/Dashboard.jpeg">
+                            <img src="/Pages/Dashboard.jpeg" alt="Dashboard do sistema RazeCar com métricas de faturamento do lava-rápido" loading="lazy">
                             <div class="screen-overlay">
                                 <span>Visão Geral do Negócio</span>
                                 <p>Acompanhe métricas em tempo real.</p>
@@ -968,7 +1016,7 @@
 
                     <div class="screen-slide">
                         <div class="screen-card">
-                            <img src="/Pages/historico.jpeg">
+                            <img src="/Pages/historico.jpeg" alt="Tela de histórico de veículos e ordens de serviço do RazeCar" loading="lazy">
                             <div class="screen-overlay">
                                 <span>Entrada de Veículos Rápida</span>
                                 <p>Cadastro de OS simplificado em poucos cliques.</p>
@@ -978,7 +1026,7 @@
 
                     <div class="screen-slide">
                         <div class="screen-card">
-                            <img src="/Pages/Agendamento.jpeg">
+                            <img src="/Pages/Agendamento.jpeg" alt="Tela de agendamento online do RazeCar para estética automotiva" loading="lazy">
                             <div class="screen-overlay">
                                 <span>Agendamentos</span>
                                 <p>Facilidade para você e seu cliente.</p>
@@ -995,6 +1043,38 @@
 
         </div>
 
+    </section>
+
+    <section id="blog" class="features">
+        <div class="section-header">
+            <h2>Dicas para donos de lava-rápido e estética automotiva</h2>
+            <p>Conteúdo gratuito para te ajudar a vender mais e organizar melhor o seu negócio.</p>
+        </div>
+
+        <div class="features-grid" style="grid-template-columns: repeat(3, 1fr);">
+            <div class="feature-card">
+                <i class="fas fa-heart"></i>
+                <h3><a href="blog/fidelizacao-clientes-estetica-automotiva.html" style="color:inherit; text-decoration:none;">Como fidelizar clientes na estética automotiva</a></h3>
+                <p>8 estratégias práticas para fazer o cliente voltar e indicar seu lava-rápido.</p>
+                <a href="blog/fidelizacao-clientes-estetica-automotiva.html" style="color: var(--brand-orange); font-weight:600; text-decoration:none;">Ler artigo <i class="fas fa-arrow-right" style="font-size:0.8em;"></i></a>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-calendar-check"></i>
+                <h3><a href="blog/organizar-agendamento-lava-rapido.html" style="color:inherit; text-decoration:none;">Como organizar o agendamento do lava-jato</a></h3>
+                <p>Reduza furos na agenda e filas de espera com essas técnicas simples.</p>
+                <a href="blog/organizar-agendamento-lava-rapido.html" style="color: var(--brand-orange); font-weight:600; text-decoration:none;">Ler artigo <i class="fas fa-arrow-right" style="font-size:0.8em;"></i></a>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-tags"></i>
+                <h3><a href="blog/como-precificar-servicos-estetica-automotiva.html" style="color:inherit; text-decoration:none;">Como precificar serviços de estética automotiva</a></h3>
+                <p>Aprenda a calcular preços que cobrem seus custos e ainda geram lucro.</p>
+                <a href="blog/como-precificar-servicos-estetica-automotiva.html" style="color: var(--brand-orange); font-weight:600; text-decoration:none;">Ler artigo <i class="fas fa-arrow-right" style="font-size:0.8em;"></i></a>
+            </div>
+        </div>
+
+        <div style="margin-top: 40px;">
+            <a href="blog/index.html" class="btn-secondary" style="display:inline-flex; background-color: var(--bg-blue); color:#fff; border:none;">Ver todas as dicas <i class="fas fa-arrow-right"></i></a>
+        </div>
     </section>
 
     <section id="planos" class="pricing">
@@ -1050,7 +1130,12 @@
 
     <footer>
         <h2 class="logo" style="margin-bottom: 10px;">Raze<span>Car</span></h2>
-        <p>&copy; 2024 RazeCar. Tecnologia de outro mundo.</p>
+        <nav style="margin-bottom: 16px;">
+            <a href="#funcionalidades" style="color:#fff; opacity:0.8; margin:0 12px; text-decoration:none;">Funcionalidades</a>
+            <a href="#planos" style="color:#fff; opacity:0.8; margin:0 12px; text-decoration:none;">Planos</a>
+            <a href="blog/index.html" style="color:#fff; opacity:0.8; margin:0 12px; text-decoration:none;">Blog</a>
+        </nav>
+        <p>&copy; 2026 RazeCar. Tecnologia de outro mundo.</p>
     </footer>
 
     <script>
